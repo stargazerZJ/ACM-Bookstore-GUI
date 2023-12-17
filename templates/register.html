@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% set page='Register' %}
+
+{% block content %}
+    <div class="card card-body col-lg-5 m-auto">
+        <h1>Register</h1>
+        <form method="post" id="register">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" type="text" name="username" id="username" required="required" pattern="[a-zA-Z0-9_]{0,30}" title="用户名要求：30 位以内的大小写字母或数字" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" name="password" id="password" required="required" minlength="0" maxlength="30" title="密码要求：0-30 位" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label for="friendly_name">Nickname</label>
+                <input class="form-control" type="text" name="friendly_name" id="friendly_name" required="required" pattern="[a-zA-Z0-9_]{1,30}" title="昵称要求：30 位以内的大小写字母、数字、下划线" autocomplete="nickname">
+            </div>
+            {% if is_Admin %}
+            <div class="form-group">
+                <label for="privilege">Privilege</label>
+                <input class="form-control" type="text" name="privilege" id="privilege" required="required" pattern="[137]" title="Privilege" autocomplete="3">
+            </div>
+            {% endif %}
+            <br>
+            <input class="btn btn-block btn-primary" type="submit" value="Register">
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('.static', filename = 'js/register.js') }}"></script>
+{% endblock %}

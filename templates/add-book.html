@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% set page='Add book' %}
+
+{% block content %}
+    <div class="card card-body col-lg-5 m-auto">
+        <h1>Add book</h1>
+        <form method="post" id="add_book">
+            <div class="form-group">
+                <label for="ISBN">ISBN</label>
+                <input class="form-control" type="text" name="ISBN" id="ISBN" required="required" pattern="[a-zA-Z0-9_]{0,20}" title="20 位以内的大小写字母或数字" autocomplete="ISBN">
+            </div>
+            <div class="form-group">
+                <label for="title">title</label>
+                <input class="form-control" type="text" name="title" id="title" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="new-title">
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input class="form-control" type="text" name="author" id="author" required="required" pattern="[a-zA-Z0-9_]{1,30}" title="昵称要求：30 位以内的大小写字母、数字、下划线" autocomplete="nickname">
+            </div>
+            <br>
+            <input class="btn btn-block btn-primary" type="submit" value="Add book">
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('.static', filename = 'js/add-book.js') }}"></script>
+{% endblock %}

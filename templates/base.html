@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page }} · ACMOJ</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="{{ url_for('.static', filename = 'lib/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('.static', filename = 'argon.min.css') }}?v=20231109" rel="stylesheet">
+    <link href="{{ url_for('.static', filename = 'styles.css') }}?v=20231114" rel="stylesheet">
+    <link href="{{ url_for('.static', filename = 'dark.css') }}?v=20231114" rel="stylesheet"> {% block head %}{% endblock %}
+</head>
+
+<body class="bg-secondary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-2 mb-3">
+        <div class="container">
+            <a class="navbar-brand" href="/">Bookstore</a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="navbar-collapse collapse" id="navbarContent">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-10 collapse-brand">
+                            <a href="/">Bookstore</a>
+                        </div>
+                        <div class="col-2 collapse-close">
+                            <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbarContent">
+                            <span></span>
+                            <span></span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="navbar-nav" style="line-height: 1;">
+                    <li class="nav-item"><a href="/problem" class="nav-link">题库</a></li>
+                    <li class="nav-item"><a href="/contest" class="nav-link">比赛</a></li>
+                    <li class="nav-item"><a href="/homework" class="nav-link">作业</a></li>
+                    <li class="nav-item"><a href="/status" class="nav-link">评测状态</a></li>
+                    {% if is_Admin %}
+                    <li class="nav-item"><a href="/admin" class="nav-link">管理</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a href="/about" class="nav-link">关于</a></li>
+                    {% if friendlyName=='' -%}
+                    <li class="dropdown-divider"></li>
+                    <li class="d-block d-lg-none nav-link"><a href="/login">Login</a></li>
+                    <li class="d-block d-lg-none nav-link"><a href="/register">Register</a></li>
+                    {%- endif %}
+                </ul>
+                <ul class="navbar-nav ml-lg-auto" style="line-height: 1;">
+                    {% if friendlyName!='' -%}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{ friendlyName }}</a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                    </li>
+                    {% else -%}
+                    <li class="d-none d-lg-block">
+                        <a class="btn btn-neutral" href="/login">Login</a>
+                        <a class="btn btn-neutral" href="/register">Register</a>
+                    </li>
+                    {%- endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">
+                Bookstore © 2023
+            </p>
+        </div>
+    </footer>
+</body>
+
+<script src="{{ url_for('.static', filename = 'lib/jquery.min.js') }}"></script>
+<script src="{{ url_for('.static', filename = 'lib/popper.min.js') }}"></script>
+<script src="{{ url_for('.static', filename = 'lib/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('.static', filename = 'lib/jquery.form.js') }}"></script>
+<script src="{{ url_for('.static', filename = 'lib/sweetalert.min.js') }}"></script>
+{% block script %}{% endblock %}
+
+</html>

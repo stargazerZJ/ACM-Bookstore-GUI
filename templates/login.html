@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% set page='登录' %}
+
+{% block content %}
+    <div class="card card-body col-lg-5 m-auto">
+        <h1>登录</h1>
+        {% if friendlyName!='' -%}
+            <h4 class="text-center">Please Logout First</h4>
+        {% else -%}
+            <form method="post" id="login">
+                <div class="form-group">
+                    <label for="username">UserID</label>
+                    <input class="form-control" type="text" name="username" id="username"
+                           required="required">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" type="password" name="password" id="password"
+                           required="required">
+                </div>
+                <input type="hidden" name="next" value="{{ Next }}">
+                <br>
+                <input type="submit" class="btn btn-block btn-primary" value="Login">
+            </form>
+        {%- endif %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('.static', filename = 'js/login.js') }}?v=2"></script>
+{% endblock %}
