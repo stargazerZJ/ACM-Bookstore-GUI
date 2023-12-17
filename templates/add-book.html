@@ -12,11 +12,19 @@
             </div>
             <div class="form-group">
                 <label for="title">title</label>
-                <input class="form-control" type="text" name="title" id="title" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="new-title">
+                <input class="form-control" type="text" name="title" id="title" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="title">
             </div>
             <div class="form-group">
-                <label for="author">Author</label>
-                <input class="form-control" type="text" name="author" id="author" required="required" pattern="[a-zA-Z0-9_]{1,30}" title="昵称要求：30 位以内的大小写字母、数字、下划线" autocomplete="nickname">
+                <label for="author">author</label>
+                <input class="form-control" type="text" name="author" id="author" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="author">
+            </div>
+            <div class="form-group">
+                <label for="keywords">keywords</label>
+                <input class="form-control" type="text" name="keywords" id="keywords" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="keywords">
+            </div>
+            <div class="form-group">
+                <label for="price">price</label>
+                <input class="form-control" type="number" step="0.01" name="price" id="price" required="required" title="price" autocomplete="price">
             </div>
             <br>
             <input class="btn btn-block btn-primary" type="submit" value="Add book">
