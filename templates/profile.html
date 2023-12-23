@@ -8,19 +8,25 @@
         <form id="profile-form">
             <div class="form-group">
                 <label for="iptOldPassword">旧密码</label>
-                <input class="form-control" type="password" name="oldPassword" minlength="0" maxlength="30" id="iptOldPassword" autocomplete="new-password">
+                <input class="form-control" type="password" name="oldPassword" minlength="0" maxlength="30"
+                       id="iptOldPassword" autocomplete="new-password">
             </div>
             <div class="form-group">
                 <label for="iptPassword">新密码</label>
-                <input class="form-control" type="password" name="password" minlength="0" maxlength="30" id="iptPassword" autocomplete="new-password">
+                <input class="form-control" type="password" name="password" minlength="0" maxlength="30"
+                       id="iptPassword" autocomplete="new-password">
             </div>
             <div class="form-group">
                 <label for="iptRepeatPassword">重复密码</label>
-                <input class="form-control" type="password" id="iptRepeatPassword" name="repeatPassword" autocomplete="new-password">
+                <input class="form-control" type="password" id="iptRepeatPassword" name="repeatPassword"
+                       autocomplete="new-password">
             </div>
             <br>
             <button class="btn btn-block btn-primary" type="submit" id="btnModify">修改</button>
         </form>
+    </div>
+    <div class="card card-body col-lg-5 m-auto">
+        <button class="btn btn-block btn-primary" type="submit" id="deleteUser">Delete User</button>
     </div>
 {% endblock %}
 
@@ -29,7 +35,7 @@
         $(function () {
             $("#profile-form").submit(function (e) {
                 e.preventDefault()
-                let op = $("#iptOldPassword").val() , p = $("#iptPassword").val(), pp = $("#iptRepeatPassword").val();
+                let op = $("#iptOldPassword").val(), p = $("#iptPassword").val(), pp = $("#iptRepeatPassword").val();
                 if (p != null && p !== "" && p !== pp) {
                     swal("Oops", "两次输入的密码不一致！", "error");
                     return false;
@@ -46,7 +52,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile",
+                    url: window.href,
                     dataType: "json",
                     data: JSON.stringify(data),
                     success: function (ret) {
@@ -57,8 +63,38 @@
                                 window.location.reload();
                             }, 800);
                         } else {
-                            swal("Oops", "信息修改失败，检查您的输入信息（昵称请不要使用中文）！", "error");
+                            swal("Error " + ret['e'], ret['msg'], "error");
                         }
+                    }
+                });
+            });
+            $("#deleteUser").on("click", function () {
+                swal("Are you sure?", "Once deleted, you will not be able to recover this user!", "warning", {
+                    buttons: {
+                        cancel: "Cancel",
+                        confirm: "Delete"
+                    },
+                }).then((value) => {
+                    if (value) {
+                        $.ajax({
+                            type: "DELETE",
+                            contentType: "application/json",
+                            url: window.href,
+                            dataType: "json",
+                            success: function (ret) {
+                                console.log(ret);
+                                if (ret["e"] === 0) {
+                                    swal("Success", "Your user has been deleted!", "success");
+                                    setTimeout(function () {
+                                        window.location.replace("/admin")
+                                    }, 800);
+                                } else {
+                                    swal("Error " + ret['e'], ret['msg'], "error");
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Your user is safe!");
                     }
                 });
             });

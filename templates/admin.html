@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set page="管理" %}
+{% set page="Admin" %}
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('.static', filename = 'lib/bootstrap-select.min.css') }}">
@@ -13,7 +13,7 @@
 {% block content %}
     <div class="card card-body">
         <h1 class="title-nav">
-            <span class="title-nav__title">管理</span>
+            <span class="title-nav__title">Admin</span>
             <ul class="title-nav__nav nav nav-pills flex-column flex-md-row" id="main_tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link mb-sm-2 mb-md-0 active" id="problem_tab_btn" data-toggle="tab" href="#problem_tab" role="tab" aria-controls="problem_tab" aria-selected="true">Book</a>
@@ -21,21 +21,38 @@
                 <li class="nav-item">
                     <a class="nav-link mb-sm-2 mb-md-0" id="user_tab_btn" data-toggle="tab" href="#user_tab" role="tab" aria-controls="user_tab" aria-selected="false">User</a>
                 </li>
+                {% if privilege == 7 %}
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-2 mb-md-0" id="log_tab_btn" href="/log">Log</a>
+                </li>
+                {% endif %}
             </ul>
         </h1>
         <hr>
         <div class="tab-content" id="main_tab_content">
             <div class="tab-pane fade" id="user_tab" role="tabpanel" aria-labelledby="user_tab-tab">
                 <a href="register" class="btn btn-primary">Add user</a>
+                <h3>Jump to user</h3>
+                <form id="form-jump-user">
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="user-id">user-id</label>
+                            <input class="form-control" type="text" id="user-id" required>
+                        </div>
+                        <div class="d-flex mb-3 pr-1">
+                            <button type="submit" class="btn btn-outline-primary mt-auto">跳转</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="tab-pane fade show active" id="problem_tab" role="tabpanel" aria-labelledby="problem_tab-tab">
                 <a href="add-book" class="btn btn-primary">Add book</a>
                 <h3>Jump to book</h3>
-                <form id="form-jump-problem">
+                <form id="form-jump-book">
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label for="problem-id">ISBN</label>
-                            <input class="form-control" type="text" id="problem-id" required>
+                            <label for="book-id">ISBN</label>
+                            <input class="form-control" type="text" id="book-id" required>
                         </div>
                         <div class="d-flex mb-3 pr-1">
                             <button type="submit" class="btn btn-outline-primary mt-auto">跳转</button>

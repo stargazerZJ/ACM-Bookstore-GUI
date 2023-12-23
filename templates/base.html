@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ page }} · ACMOJ</title>
+    <title>{{ page }} · Bookstore</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <link href="{{ url_for('.static', filename = 'lib/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('.static', filename = 'argon.min.css') }}?v=20231109" rel="stylesheet">
@@ -35,14 +35,10 @@
                     </div>
                 </div>
                 <ul class="navbar-nav" style="line-height: 1;">
-                    <li class="nav-item"><a href="/problem" class="nav-link">题库</a></li>
-                    <li class="nav-item"><a href="/contest" class="nav-link">比赛</a></li>
-                    <li class="nav-item"><a href="/homework" class="nav-link">作业</a></li>
-                    <li class="nav-item"><a href="/status" class="nav-link">评测状态</a></li>
+                    <li class="nav-item"><a href="/search" class="nav-link">Search</a></li>
                     {% if is_Admin %}
-                    <li class="nav-item"><a href="/admin" class="nav-link">管理</a></li>
+                    <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
                     {% endif %}
-                    <li class="nav-item"><a href="/about" class="nav-link">关于</a></li>
                     {% if friendlyName=='' -%}
                     <li class="dropdown-divider"></li>
                     <li class="d-block d-lg-none nav-link"><a href="/login">Login</a></li>
@@ -54,7 +50,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{ friendlyName }}</a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="/profile/{{ user_id }}">Profile</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/logout">Logout</a>
                         </div>

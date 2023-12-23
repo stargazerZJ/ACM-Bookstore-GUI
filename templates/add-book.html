@@ -8,23 +8,23 @@
         <form method="post" id="add_book">
             <div class="form-group">
                 <label for="ISBN">ISBN</label>
-                <input class="form-control" type="text" name="ISBN" id="ISBN" required="required" pattern="[a-zA-Z0-9_]{0,20}" title="20 位以内的大小写字母或数字" autocomplete="ISBN">
+                <input class="form-control" type="text" name="ISBN" id="ISBN" required="required" minlength="0" maxlength="20" title="20 位以内" placeholder="ISBN">
             </div>
             <div class="form-group">
                 <label for="title">title</label>
-                <input class="form-control" type="text" name="title" id="title" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="title">
+                <input class="form-control" type="text" name="title" id="title" required="required" minlength="0" maxlength="60" title="0-60 位" placeholder="title">
             </div>
             <div class="form-group">
                 <label for="author">author</label>
-                <input class="form-control" type="text" name="author" id="author" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="author">
+                <input class="form-control" type="text" name="author" id="author" required="required" minlength="0" maxlength="60" title="0-60 位" placeholder="author">
             </div>
             <div class="form-group">
                 <label for="keywords">keywords</label>
-                <input class="form-control" type="text" name="keywords" id="keywords" required="required" minlength="0" maxlength="60" title="0-60 位" autocomplete="keywords">
+                <input class="form-control" type="text" name="keywords" id="keywords" required="required" minlength="0" maxlength="60" title="0-60 位" placeholder="keywords">
             </div>
             <div class="form-group">
                 <label for="price">price</label>
-                <input class="form-control" type="number" step="0.01" name="price" id="price" required="required" title="price" autocomplete="price">
+                <input class="form-control" type="number" step="0.01" name="price" id="price" required="required" title="price" placeholder="price">
             </div>
             <br>
             <input class="btn btn-block btn-primary" type="submit" value="Add book">
@@ -33,5 +33,32 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{{ url_for('.static', filename = 'js/add-book.js') }}"></script>
+{#    <script src="{{ url_for('.static', filename = 'js/add-book.js') }}"></script>#}
+    <script>
+    var result = {};
+$(function(){
+    var url = window.location.href;
+    url = url.substr(url.indexOf("?")+1);
+    var queryString = url || location.search.substring(1),
+        re = /([^&=]+)=([^&]*)/g,
+        m;
+   	while (m = re.exec(queryString))
+        result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+});
+
+$(function(){
+	$("#add_book").ajaxForm(function(ret_json)
+	{
+		if(ret_json['e'] < 0)
+			swal("Error " + ret_json['e'], ret_json['msg'], "error");
+		else
+		{
+			swal("Success", ret_json['msg'], "success");
+			setTimeout(function(){
+				window.location.replace("/book/" + $("#ISBN").val());
+			},500);
+		}
+	});
+});
+    </script>
 {% endblock %}

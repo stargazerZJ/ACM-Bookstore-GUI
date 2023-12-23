@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% set page="Search" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('.static', filename = 'lib/bootstrap-select.min.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="card card-body">
+        <h1>Book Search</h1>
+        <div>
+            <form class="form-group input-group" method="get" id="book_serach">
+                <select class="form-control selectpicker" name="type" id="type"
+                        data-style="form-control font-weight-normal border-grey shadow-none">
+                    <option value="All" {{ "selected" if "type" in args and args["type"]=="All" }}>All</option>
+                    <option value="ISBN" {{ "selected" if "type" in args and args["type"]=="ISBN" }}>ISBN</option>
+                    <option value="Title" {{ "selected" if "type" in args and args["type"]=="Title" }}>Title</option>
+                    <option value="Author" {{ "selected" if "type" in args and args["type"]=="Author" }}>Author</option>
+                    <option value="Keyword" {{ "selected" if "type" in args and args["type"]=="Keyword" }}>Keyword
+                    </option>
+                </select>
+                <input class="form-control input-group" type="text" name="parameter" id="parameter"
+                       placeholder="parameter"
+                       value="{{ args["parameter"] if "parameter" in args and args["parameter"] }}">
+                <div class="input-group-append">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Keywords</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    {% if is_Admin %}
+                        <th>Manage</th>
+                    {% else %}
+                        <th>Buy</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                {% for book in books -%}
+                    <tr>
+                        <td>{{ book.ISBN }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.keywords }}</td>
+                        <td>{{ book.price / 100 }}</td>
+                        <td>{{ book.quantity }}</td>
+                        <td>
+                            <a href="book/{{ book.ISBN }}" class="btn btn-primary">
+                                {% if is_Admin %}
+                                    Manage
+                                {% else %}
+                                    Buy
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                {%- endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {#<script src="{{ url_for('.static', filename = 'js/post_join.js') }}"></script>#}
+    <script src="{{ url_for('.static', filename = 'lib/bootstrap-select.min.js') }}"></script>
+    {% if code['e'] < 0 %}
+        <script>
+            var code = "{{ code['e'] }}";
+            var msg = "{{ code['msg'] }}";
+            swal("Error " + code, msg, "error");
+        </script>
+    {% endif %}
+{% endblock %}

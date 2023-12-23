@@ -53,12 +53,18 @@ window.onload = function() {
 
 let op;
 $(function () {
-    $('#form-jump-problem').submit(e => {
+    $('#form-jump-book').submit(e => {
         e.preventDefault()
-        const id = $('#problem-id').val()
+        const id = $('#book-id').val()
         if (id === '' || isNaN(id)) return
-        location = `/OnlineJudge/problem/${id}/admin`
-    })
+        location = `/book/${id}`
+    });
+    $('#form-jump-user').submit(e => {
+        e.preventDefault()
+        const id = $('#user-id').val()
+        if (id === '' || isNaN(id)) return
+        location = `/profile/${id}`
+    });
 
     $("#btnAddUser").click(function () {
         op = 0;
